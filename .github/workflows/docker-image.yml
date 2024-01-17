@@ -22,6 +22,9 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v1
 
+      - name: Install Docker Credential Store
+        run: docker-credential-store
+
       - name: Build Docker Image
         run: |
           docker buildx build \
@@ -29,11 +32,11 @@ jobs:
             --build-arg HOST_PORT=${HOST_PORT} \
             -t micro-template:${TAG_NAME} \
             .
-
+          
       - name: Push Docker Image to Registry
         run: |
-          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker push micro-template:${TAG_NAME}
+          echo ${{ secrets.DOCKER_PASSWORD }} | DOCKER_CONFIG=/home/runner/.docker/config.json docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          DOCKER_CONFIG=/home/runner/.docker/config.json docker push micro-template:${TAG_NAME}
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

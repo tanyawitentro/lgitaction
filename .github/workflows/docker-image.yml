@@ -38,5 +38,4 @@ jobs:
       # You can add more steps here, but no need to push the image.
 
       - name: Print Docker Image Name
-        run: echo "Docker image: micro-template:${TAG_NAME}"
-
+        run: echo "Docker image micro-template:${TAG_NAME}"

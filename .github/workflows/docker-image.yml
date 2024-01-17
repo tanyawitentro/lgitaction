@@ -20,16 +20,16 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Docker
-        uses: actions/setup-docker@v2
+        uses: docker/setup-buildx-action@v1
 
       - name: Build Docker Image
         run: |
-          docker build \
+          docker buildx build \
             --build-arg PM2_FILE=${PM2_FILE} \
             --build-arg HOST_PORT=${HOST_PORT} \
             -t micro-template:${TAG_NAME} \
             .
-          
+
       - name: Push Docker Image to Registry
         run: |
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin

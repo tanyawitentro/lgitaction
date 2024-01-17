@@ -23,7 +23,7 @@ jobs:
       run: docker images
 
     - name: Build the Docker image
-      run: docker build -t tanyawitentro/micro-template:latest .
+      run: docker build --build-arg PM2_FILE=pm2-prod.json --build-arg HOST_PORT=5000 -t tanyawitentro/micro-template:latest .
 
     - name: Show Docker images after build
       run: docker images

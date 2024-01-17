@@ -30,7 +30,7 @@ jobs:
           docker buildx build \
             --build-arg PM2_FILE=${PM2_FILE} \
             --build-arg HOST_PORT=${HOST_PORT} \
-            -t "${{ github.repository_owner }}/micro-template:${TAG_NAME}" \
+            -t "${REGISTRY}/${{ github.repository_owner }}/micro-template:${TAG_NAME}" \
             .
 
       - name: Login to GitHub Container Registry

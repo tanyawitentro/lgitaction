@@ -25,6 +25,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
+          echo "Building Docker Image..."
           docker buildx build \
             --build-arg PM2_FILE=${PM2_FILE} \
             --build-arg HOST_PORT=${HOST_PORT} \

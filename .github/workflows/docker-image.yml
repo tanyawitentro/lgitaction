@@ -34,12 +34,20 @@ jobs:
           
       - name: Tag Docker Image
         run: |
-          docker tag micro-template:${TAG_NAME} tanyawitentro/micro-template:${TAG_NAME}
+          if [ "${TAG_NAME}" == "v2.0" ]; then
+            docker tag micro-template:${TAG_NAME} tanyawitentro/micro-template:${TAG_NAME}
+            docker tag micro-template:${TAG_NAME} tanyawitentro/micro-template:v2.0
+          else
+            docker tag micro-template:${TAG_NAME} tanyawitentro/micro-template:${TAG_NAME}
+          fi
 
       - name: Push Docker Image to Registry
         run: |
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker push tanyawitentro/micro-template:${TAG_NAME}
+          if [ "${TAG_NAME}" == "v2.0" ]; then
+            docker push tanyawitentro/micro-template:v2.0
+          fi
 
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}

@@ -25,30 +25,19 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          echo "Building Docker Image..."
           docker buildx build \
             --build-arg PM2_FILE=${PM2_FILE} \
             --build-arg HOST_PORT=${HOST_PORT} \
-            -t micro-template:${TAG_NAME} \
+            -t micro-template \
             .
           
       - name: Tag Docker Image
         run: |
-          if [ "${TAG_NAME}" == "v2.0" ]; then
-            docker tag micro-template:${TAG_NAME} tanyawitentro/micro-template:${TAG_NAME}
-            docker tag micro-template:${TAG_NAME} tanyawitentro/micro-template:v2.0
-          else
-            docker tag micro-template:${TAG_NAME} tanyawitentro/micro-template:${TAG_NAME}
-          fi
-
+          docker tag micro-template tanyawitentro/micro-template:${TAG_NAME}
       - name: Push Docker Image to Registry
         run: |
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           docker push tanyawitentro/micro-template:${TAG_NAME}
-          if [ "${TAG_NAME}" == "v2.0" ]; then
-            docker push tanyawitentro/micro-template:v2.0
-          fi
-
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

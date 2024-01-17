@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      PM2_FILE: pm2-prod.json
+      HOST_PORT: 5000
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -25,7 +29,7 @@ jobs:
       run: docker images
 
     - name: Build the Docker image
-      run: docker build --build-arg PM2_FILE=pm2-prod.json --build-arg HOST_PORT=5000 -t ghcr.io/tanyawitentro/micro-template:latest .
+      run: docker build --build-arg PM2_FILE=${{ env.PM2_FILE }} --build-arg HOST_PORT=${{ env.HOST_PORT }} -t ghcr.io/tanyawitentro/micro-template:latest .
 
     - name: Show Docker images after build
       run: docker images

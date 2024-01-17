@@ -32,6 +32,10 @@ jobs:
             -t "${REGISTRY}/${{ github.repository_owner }}/micro-template:${TAG_NAME}" \
             .
 
+      - name: Tag Docker Image
+        run: |
+          docker tag "${REGISTRY}/${{ github.repository_owner }}/micro-template:${TAG_NAME}" "${REGISTRY}/${{ github.repository_owner }}/micro-template:latest"
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -40,7 +44,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Docker Image to GitHub Container Registry
-        run: docker push "${REGISTRY}/${{ github.repository_owner }}/micro-template:${TAG_NAME}"
+        run: docker push "${REGISTRY}/${{ github.repository_owner }}/micro-template:${TAG_NAME}" && docker push "${REGISTRY}/${{ github.repository_owner }}/micro-template:latest"
 
-      - name: Print Docker Image Name
-        run: echo "Docker image ${GITHUB_REPOSITORY}/micro-template:${TAG_NAME}"
+      - name: Print Docker Image Names
+        run: |
+          echo "Docker image ${GITHUB_REPOSITORY}/micro-template:${TAG_NAME}"
+          echo "Docker image ${GITHUB_REPOSITORY}/micro-template:latest"

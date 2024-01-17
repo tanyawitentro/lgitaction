@@ -37,7 +37,7 @@ jobs:
         run: echo $CR_TOKEN | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
       - name: Push Docker Image to GitHub Container Registry
-        run: docker push "${ REGISTRY }/${{ github.repository_owner }}/micro-template:${TAG_NAME}"
+        run: docker push "${REGISTRY}/${{ github.repository_owner }}/micro-template:${TAG_NAME}"
 
       - name: Print Docker Image Name
         run: echo "Docker image ${GITHUB_REPOSITORY}/micro-template:${TAG_NAME}"

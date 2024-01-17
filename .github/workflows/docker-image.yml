@@ -29,14 +29,14 @@ jobs:
           docker buildx build \
             --build-arg PM2_FILE=${PM2_FILE} \
             --build-arg HOST_PORT=${HOST_PORT} \
-            -t "${{ github.repository_owner }}/micro-template:${TAG_NAME}" \
+            -t "$madaohsgw/micro-template:${TAG_NAME}" \
             .
 
       - name: Login to GitHub Container Registry
         run: echo $CR_TOKEN | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
       - name: Push Docker Image to GitHub Container Registry
-        run: docker push "${{ github.repository_owner }}/micro-template:${TAG_NAME}"
+        run: docker push "$madaohsgw/micro-template:${TAG_NAME}"
 
       - name: Print Docker Image Name
         run: echo "Docker image ${GITHUB_REPOSITORY}/micro-template:${TAG_NAME}"

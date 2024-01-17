@@ -28,10 +28,8 @@ jobs:
           docker buildx build \
             --build-arg PM2_FILE=${PM2_FILE} \
             --build-arg HOST_PORT=${HOST_PORT} \
-            -t micro-template:${TAG_NAME} \
+            -t "${{ github.repository_owner }}/micro-template:${TAG_NAME}" \
             .
 
-      # You can add more steps here, but no need to push the image.
-
       - name: Print Docker Image Name
-        run: echo "Docker image micro-template:${TAG_NAME}"
+        run: echo "Docker image ${GITHUB_REPOSITORY}/micro-template:${TAG_NAME}"

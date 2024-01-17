@@ -32,27 +32,8 @@ jobs:
           docker buildx build \
             --build-arg PM2_FILE=${PM2_FILE} \
             --build-arg HOST_PORT=${HOST_PORT} \
-            -t "${REGISTRY}/${{ github.repository_owner }}/micro-template:${TAG_NAME}" \
+            -t "micro-template:${TAG_NAME}" \
             .
 
       - name: Print Docker Images After Build
         run: docker images
-
-      - name: Tag Docker Image
-        run: |
-          docker tag "${REGISTRY}/${{ github.repository_owner }}/micro-template:${TAG_NAME}" "${REGISTRY}/${{ github.repository_owner }}/micro-template:latest"
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Push Docker Image to GitHub Container Registry
-        run: docker push "${REGISTRY}/${{ github.repository_owner }}/micro-template:${TAG_NAME}" && docker push "${REGISTRY}/${{ github.repository_owner }}/micro-template:latest"
-
-      - name: Print Docker Image Names
-        run: |
-          echo "Docker image ${GITHUB_REPOSITORY}/micro-template:${TAG_NAME}"
-          echo "Docker image ${GITHUB_REPOSITORY}/micro-template:latest"

@@ -34,6 +34,7 @@ jobs:
             --build-arg HOST_PORT=${HOST_PORT} \
             -t "micro-template:${TAG_NAME}" \
             .
+          docker images  # Print Docker images after the build
 
       - name: Print Docker Images After Build
         run: docker images

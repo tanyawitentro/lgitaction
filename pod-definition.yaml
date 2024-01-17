@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: micro-template
+spec:
+  containers:
+  - name: micro-template-container
+    image: nexus.entro-lab.com/micro-template:v1.0

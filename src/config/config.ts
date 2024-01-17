@@ -1,0 +1,5 @@
+export const SERVIVE_NAME = 'Micro-Template'
+export const SERVIVE_VERSION = 'V1.0.0'
+export const ENVIRONMENT = process.env.NODE_ENV || 'development'
+export const PORT = process.env['PORT'] || '5000'
+export const AUTH_SECRET = 'auth'

@@ -1,0 +1,14 @@
+*.log
+package-lock.json
+
+logs/
+node_modules/
+dist/
+.vscode/
+
+appLogPath/
+cPath/
+summaryPath/
+detailPath/
+statPath/
+alarmPath/

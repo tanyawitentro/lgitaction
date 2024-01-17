@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-template-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: micro-template
+  template:
+    metadata:
+      labels:
+        app: micro-template
+    spec:
+      containers:
+      - name: micro-template
+        image: nexus.entro-lab.com/micro-template:v1.0
+        ports:
+        - containerPort: 5000

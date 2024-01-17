@@ -14,6 +14,7 @@ jobs:
       TAG_NAME: v2.0
       PM2_FILE: pm2-prod.json
       HOST_PORT: 5000
+      CR_TOKEN: ${{ secrets.CR_TOKEN }}
 
     steps:
       - name: Checkout Repository
@@ -30,6 +31,12 @@ jobs:
             --build-arg HOST_PORT=${HOST_PORT} \
             -t "${{ github.repository_owner }}/micro-template:${TAG_NAME}" \
             .
+
+      - name: Login to GitHub Container Registry
+        run: echo $CR_TOKEN | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+
+      - name: Push Docker Image to GitHub Container Registry
+        run: docker push "${{ github.repository_owner }}/micro-template:${TAG_NAME}"
 
       - name: Print Docker Image Name
         run: echo "Docker image ${GITHUB_REPOSITORY}/micro-template:${TAG_NAME}"

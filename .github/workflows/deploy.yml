@@ -20,4 +20,4 @@ jobs:
         echo "Deployment steps"
         
         # Use sshpass to provide the password
-        sshpass -p ${{ secrets.SERVER_OVMS_PASSWORD }} ssh ovms@192.168.30.42 "cd /app/deployment && less ovms-be-deployment.yaml"
+        sshpass -p ${{ secrets.SERVER_OVMS_PASSWORD }} ssh ovms@192.168.30.41 "cd /app/deployment && less ovms-be-deployment.yaml"
